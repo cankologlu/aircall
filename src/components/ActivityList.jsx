@@ -7,11 +7,12 @@ import {
   Button,
   SimpleGrid,
   Flex,
-  IconButton, Divider
+  IconButton,
+  Divider,
 } from "@chakra-ui/react";
 import { FaPhoneAlt, FaEllipsisV } from "react-icons/fa";
 import { BiPhoneIncoming, BiPhoneOutgoing } from "react-icons/bi";
-import { whiten } from "@chakra-ui/theme-tools";
+
 
 const mockData = [
   {
@@ -60,8 +61,26 @@ const mockData = [
   },
 ];
 
+
+const dateSorter = (data) => {
+  return data.reduce((dateOfCall, call)=>{
+    const callDate = call.created_at.split("T")[0]
+    if(dateOfCall[callDate]) {
+      dateOfCall[callDate].push(call);
+    }
+    else {
+      dateOfCall[callDate] = [call];
+    }
+    return dateOfCall;
+
+  },{})
+}
+
+console.log(dateSorter(mockData));
+
 const ActivityList = () => {
   return (
+    
     <Box
       boxShadow="lg"
       p="6"
@@ -70,35 +89,50 @@ const ActivityList = () => {
       mt={"10px"}
       paddingY={"10px"}
     >
-      <SimpleGrid templateColumns={"repeat(5,1fr)"} >
-        <Icon colSpan={1}
+      <SimpleGrid templateColumns={"repeat(5,1fr)"}>
+        <Icon
+          colSpan={1}
           as={BiPhoneIncoming}
-
           boxSize={"25px"}
           color="red.500"
           width={"min-content"}
         />
-   
-           <Text width={"max-content"} colSpan={3} alignSelf={"center"} justifySelf={"center"}>mogadishu and sons</Text>
-        <Badge colorScheme="red" height={"min-content"} width={"min-content"} alignSelf={"center"} justifySelf={"center"}>
+
+        <Text
+          width={"max-content"}
+          colSpan={3}
+          alignSelf={"center"}
+          justifySelf={"center"}
+        >
+          mogadishu and sons
+        </Text>
+        <Badge
+          colorScheme="red"
+          height={"min-content"}
+          width={"min-content"}
+          alignSelf={"center"}
+          justifySelf={"center"}
+        >
           3
         </Badge>
 
-       
-        
-        <IconButton colSpan={1} bg={"white"}
+        <IconButton
+          colSpan={1}
+          bg={"white"}
           width={"2px"}
           onClick={() => console.log("hey")}
-          icon={<FaEllipsisV/>}
+          icon={<FaEllipsisV />}
         />
-        <Text colSpan={1}
+        <Text
+          colSpan={1}
           display={"flex"}
-          alignSelf={"center"} justifySelf={"center"}
+          alignSelf={"center"}
+          justifySelf={"center"}
         >
           Time
         </Text>
       </SimpleGrid>
-      <Divider/>
+      <Divider />
       <Text mt={"2px"}>Called on: Phone</Text>
     </Box>
   );
