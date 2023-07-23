@@ -46,7 +46,7 @@ const customTheme = extendTheme({
 
 const App = () => {
   return (
-    <ChakraProvider theme={customTheme} boxSizing='none'>
+    <ChakraProvider theme={customTheme} flexWrap="none">
       <Box className='container'>
       <Header/>
       <Navbar/>

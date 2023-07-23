@@ -1,4 +1,7 @@
 import React from "react";
+
+import ActivityList from "./ActivityList.jsx";
+
 import {
   Tabs,
   TabList,
@@ -8,7 +11,6 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-import ActivityList from "./ActivityList";
 
 const Navbar = () => {
   return (
@@ -44,7 +46,7 @@ const Navbar = () => {
         </Tab>
       </TabList>
       
-      <TabPanels>
+      <TabPanels display={"inherit"}>
         <TabPanel>
         <Button 
         height={5}
