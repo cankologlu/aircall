@@ -31,14 +31,22 @@ const CallsProvider = ({children }) => {
   }, []);
 
   const updateIsArchived = (callId, isArchived) => {
+    console.log("Patch req callid", callId)
+    const Id = callId;
     axios
       .patch(
-        `https://cerulean-marlin-wig.cyclic.app/activities${callId}`,
+        `https://cerulean-marlin-wig.cyclic.app/activities/6393bb7b69073dc45849ca7c`,
         {
           is_archived: isArchived,
+        }, {
+          headers: {
+           
+            "Content-Type": "application/json",
+          },
         }
       )
       .then((response) => {
+        console.log('Response data after patch req', response.data)
         callsApi();
       })
       .catch((error) => {

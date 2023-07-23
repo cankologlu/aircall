@@ -60,105 +60,109 @@ const mockData = [
   },
 ];
 
-
-
 const ActivityList = () => {
-
-  const { calls, updateIsArchived } = useContext(CallsContext)
-
-
+  const { calls, updateIsArchived } = useContext(CallsContext);
+  console.log("Calls from context are:",calls)
   return (
-    <Box overflowY="auto"
-    maxHeight="450px"
-    overflowX="hidden"
-    paddingY= "10px"
-    paddingX="8px"
-    w={"inherit"}
-    css={{
-      "&::-webkit-scrollbar": {
-        width: "4px",
-      },
-      "&::-webkit-scrollbar-track": {
-        width: "4px",
-      },
-      "&::-webkit-scrollbar-thumb": {
-        background: "#CBD5E0",
-        borderRadius: "24px",
-      },
-    }} >
-      {Object.entries(calls).map(([date, callList]) => (callList.some((call) => !call.is_archived) &&
-        <Box key={date}>
-          <Text my={"10px"} alignContent={"center"}>
-            {date}
-          </Text>
-          <Divider my={"10px"} mx={"10px"} />
-          {callList.map(
-            (call) =>
-              !call.is_archived && (
-                <Box
-                  key={call.id}
-                  boxShadow="lg"
-                  p="6"
-                  rounded="md"
-                  bg="white"
-                  mt={"10px"}
-                  paddingY={"10px"}
-                >
-                  <SimpleGrid templateColumns={"repeat(5,1fr)"}>
-                    <Icon
-                      as={
-                        call.direction === "inbound"
-                          ? BiPhoneIncoming
-                          : BiPhoneOutgoing
-                      }
-                      boxSize={"25px"}
-                      color={call.duration > 0 ? "green.500" : "red.500"}
-                      width={"min-content"}
-                    />
+    <Box
+      overflowY="auto"
+      maxHeight="450px"
+      overflowX="hidden"
+      paddingY="10px"
+      paddingX="8px"
+      w={"inherit"}
+      css={{
+        "&::-webkit-scrollbar": {
+          width: "4px",
+        },
+        "&::-webkit-scrollbar-track": {
+          width: "4px",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          background: "#CBD5E0",
+          borderRadius: "24px",
+        },
+      }}
+    >
+      {Object.entries(calls).map(
+        ([date, callList]) =>
+          callList.some((call) => !call.is_archived) && (
+            <Box key={date}>
+              <Text my={"10px"} alignContent={"center"}>
+                {date}
+              </Text>
+              <Divider my={"10px"} mx={"10px"} />
+              {callList.map(
+                (call) =>
+                  !call.is_archived && (
+                    <Box
+                      key={call.id}
+                      boxShadow="lg"
+                      p="6"
+                      rounded="md"
+                      bg="white"
+                      mt={"10px"}
+                      paddingY={"10px"}
+                    >
+                      <SimpleGrid templateColumns={"repeat(5,1fr)"}>
+                        <Icon
+                          as={
+                            call.direction === "inbound"
+                              ? BiPhoneIncoming
+                              : BiPhoneOutgoing
+                          }
+                          boxSize={"25px"}
+                          color={call.duration > 0 ? "green.500" : "red.500"}
+                          width={"min-content"}
+                        />
 
-                    <Text
-                      width={"max-content"}
-                      colSpan={1}
-                      alignSelf={"center"}
-                      justifySelf={"center"}
-                    >
-                      { call.from === undefined ? "Unknown" : "" + call.from}
-                    </Text>
-                    <Badge
-                      colorScheme="red"
-                      height={"min-content"}
-                      width={"min-content"}
-                      alignSelf={"center"}
-                      justifySelf={"center"}
-                    >
-                      3
-                    </Badge>
+                        <Text
+                          width={"max-content"}
+                          colSpan={1}
+                          alignSelf={"center"}
+                          justifySelf={"center"}
+                        >
+                          {call.from === undefined ? "Unknown" : "" + call.from}
+                        </Text>
+                        <Badge
+                          colorScheme="red"
+                          height={"min-content"}
+                          width={"min-content"}
+                          alignSelf={"center"}
+                          justifySelf={"center"}
+                        >
+                          3
+                        </Badge>
 
-                    <IconButton
-                      colSpan={1}
-                      bg={"white"}
-                      width={"2px"}
-                      onClick={() => console.log("hey")}
-                      icon={<FaEllipsisV />}
-                    />
-                    <Text
-                      colSpan={1}
-                      display={"flex"}
-                      alignSelf={"center"}
-                      justifySelf={"center"}
-                    >
-                      {/* {call.created_at.split("T")[1].split(":")[0] + ":" + call.created_at.split("T")[1].split(":")[1]} */}
-                    </Text>
-                  </SimpleGrid>
-                  <Divider />
-                  <Text mt={"2px"}>
-                    Called on: {call.via ? "aircall" : "phone"}
-                  </Text>
-                </Box>
-              )
-          )}
-        </Box>
-      ))}
+                        <IconButton
+                          colSpan={1}
+                          bg={"white"}
+                          width={"2px"}
+                          onClick={() => {console.log("calls from onclick", calls); console.log("call from onclick", call);updateIsArchived(call.id, true)}}
+                          icon={<FaEllipsisV />}
+                        />
+                        <Text
+                          colSpan={1}
+                          display={"flex"}
+                          alignSelf={"center"}
+                          justifySelf={"center"}
+                        >
+                          {new Date(call.created_at).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </Text>
+                      </SimpleGrid>
+                      <Divider />
+                      <Text mt={"2px"}>
+                        Called on: {call.via ? "aircall" : "phone"}
+                      </Text>
+                    </Box>
+                  )
+              )}
+            </Box>
+          )
+      )}
     </Box>
   );
 };
