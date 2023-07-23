@@ -9,7 +9,7 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import { FaEllipsisV } from "react-icons/fa";
-import { BiPhoneIncoming, BiPhoneOutgoing } from "react-icons/bi";
+import { BiPhoneIncoming, BiPhoneOutgoing, BiArchiveOut } from "react-icons/bi";
 
 import { CallsContext } from "../context/CallsProvider.jsx";
 
@@ -143,7 +143,7 @@ const ArchiveList = () => {
                           bg={"white"}
                           width={"2px"}
                           onClick={() => updateIsArchived(call.id, false)}
-                          icon={<FaEllipsisV />}
+                          icon={<BiArchiveOut />}
                         />
                         <Text
                           key={"time" + call.id}

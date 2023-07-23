@@ -35,7 +35,7 @@ const CallsProvider = ({children }) => {
     const Id = callId;
     axios
       .patch(
-        `https://cerulean-marlin-wig.cyclic.app/activities/6393bb7b69073dc45849ca7c`,
+        `https://cerulean-marlin-wig.cyclic.app/activities/${Id}`,
         {
           is_archived: isArchived,
         }, {
