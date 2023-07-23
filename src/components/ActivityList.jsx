@@ -10,7 +10,7 @@ import {
   IconButton,
   Divider,
 } from "@chakra-ui/react";
-import { FaPhoneAlt, FaEllipsisV } from "react-icons/fa";
+import { FaEllipsisV } from "react-icons/fa";
 import { BiPhoneIncoming, BiPhoneOutgoing } from "react-icons/bi";
 
 const mockData = [

@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 import Header from './Header.jsx';
 import Navbar from './components/Navbar.jsx';
 
-import { ChakraProvider,extendTheme  } from '@chakra-ui/react';
+import { ChakraProvider, extendTheme, Box  } from '@chakra-ui/react';
 
-import { Box } from '@chakra-ui/react';
+import { CallsProvider, CallsContext } from './context/CallsProvider.jsx';
 
 const customTheme = extendTheme({
   styles: {
@@ -46,12 +46,14 @@ const customTheme = extendTheme({
 
 const App = () => {
   return (
+    <CallsProvider>
     <ChakraProvider theme={customTheme} flexWrap="none">
       <Box className='container'>
       <Header/>
       <Navbar/>
     </Box>
    </ChakraProvider>
+   </CallsProvider>
   );
 };
 
