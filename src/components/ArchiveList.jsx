@@ -134,7 +134,7 @@ const ArchiveList = () => {
                           alignSelf={"center"}
                           justifySelf={"center"}
                         >
-                          3
+                          1
                         </Badge>
 
                         <IconButton
@@ -142,8 +142,10 @@ const ArchiveList = () => {
                           colSpan={1}
                           bg={"white"}
                           width={"2px"}
+                          
                           onClick={() => updateIsArchived(call.id, false)}
                           icon={<BiArchiveOut />}
+                          isDisabled={!call.from}
                         />
                         <Text
                           key={"time" + call.id}

@@ -131,7 +131,7 @@ const ActivityList = () => {
                           alignSelf={"center"}
                           justifySelf={"center"}
                         >
-                          3
+                          1
                         </Badge>
 
                         <IconButton
@@ -140,6 +140,7 @@ const ActivityList = () => {
                           width={"2px"}
                           onClick={() => {console.log("calls from onclick", calls); console.log("call from onclick", call);updateIsArchived(call.id, true)}}
                           icon={<BiArchiveIn />}
+                          isDisabled={!call.from}
                         />
                         <Text
                           colSpan={1}
