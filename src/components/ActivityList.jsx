@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Box,
   Icon,
   Text,
   Badge,
-  Button,
   SimpleGrid,
-  Flex,
   IconButton,
   Divider,
 } from "@chakra-ui/react";
 import { FaEllipsisV } from "react-icons/fa";
 import { BiPhoneIncoming, BiPhoneOutgoing } from "react-icons/bi";
+
+import { CallsContext } from "../context/CallsProvider.jsx";
 
 const mockData = [
   {
@@ -60,27 +60,32 @@ const mockData = [
   },
 ];
 
-const dateSorter = (data) => {
-  return data.reduce((dateOfCall, call) => {
-    const callDate = call.created_at.split("T")[0];
-    if (dateOfCall[callDate]) {
-      dateOfCall[callDate].push(call);
-    } else {
-      dateOfCall[callDate] = [call];
-    }
-    return dateOfCall;
-  }, {});
-};
+
 
 const ActivityList = () => {
-  const [calls, setCalls] = useState({});
-  useEffect(() => {
-    const sortedData = dateSorter(mockData);
-    setCalls(sortedData);
-  }, []);
-  console.log(calls);
+
+  const { calls, updateIsArchived } = useContext(CallsContext)
+
+
   return (
-    <Box>
+    <Box overflowY="auto"
+    maxHeight="450px"
+    overflowX="hidden"
+    paddingY= "10px"
+    paddingX="8px"
+    w={"inherit"}
+    css={{
+      "&::-webkit-scrollbar": {
+        width: "4px",
+      },
+      "&::-webkit-scrollbar-track": {
+        width: "4px",
+      },
+      "&::-webkit-scrollbar-thumb": {
+        background: "#CBD5E0",
+        borderRadius: "24px",
+      },
+    }} >
       {Object.entries(calls).map(([date, callList]) => (callList.some((call) => !call.is_archived) &&
         <Box key={date}>
           <Text my={"10px"} alignContent={"center"}>
@@ -117,7 +122,7 @@ const ActivityList = () => {
                       alignSelf={"center"}
                       justifySelf={"center"}
                     >
-                      {"" + call.from}
+                      { call.from === undefined ? "Unknown" : "" + call.from}
                     </Text>
                     <Badge
                       colorScheme="red"

@@ -1,8 +1,7 @@
 import React from "react";
 
 import ActivityList from "./ActivityList.jsx";
-import ArchiveList from "./ArchiveList.jsx"
-
+import ArchiveList from "./ArchiveList.jsx";
 
 import {
   Tabs,
@@ -13,16 +12,18 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-
 const Navbar = () => {
   return (
     <Tabs>
       <TabList display="flex">
         <Tab
-          _selected={{ boxShadow: "inner",
-          py: "inherit",
-          rounded: "sm",
-          bg: "white", color: "green" }}
+          _selected={{
+            boxShadow: "inner",
+            py: "inherit",
+            rounded: "sm",
+            bg: "white",
+            color: "green",
+          }}
           _focus={{
             boxShadow: "inner",
             py: "inherit",
@@ -33,10 +34,13 @@ const Navbar = () => {
           Calls
         </Tab>
         <Tab
-          _selected={{ boxShadow: "inner",
-          py: "inherit",
-          rounded: "sm",
-          bg: "white", color: "green" }}
+          _selected={{
+            boxShadow: "inner",
+            py: "inherit",
+            rounded: "sm",
+            bg: "white",
+            color: "green",
+          }}
           _focus={{
             boxShadow: "inner",
             py: "inherit",
@@ -47,18 +51,16 @@ const Navbar = () => {
           Archive
         </Tab>
       </TabList>
-      
-      <TabPanels display={"inherit"}>
-        <TabPanel>
 
+      <TabPanels display={"inherit"}>
+        <TabPanel >
           <ActivityList />
         </TabPanel>
         <TabPanel>
-          <ArchiveList/>
+          <ArchiveList />
         </TabPanel>
       </TabPanels>
     </Tabs>
-    
   );
 };
 

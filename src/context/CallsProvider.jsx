@@ -1,6 +1,8 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
+import dateSorter from "../helpers/dateSorter";
+
 
 const CallsContext = createContext({});
 
@@ -14,8 +16,10 @@ const CallsProvider = ({children }) => {
         "https://cerulean-marlin-wig.cyclic.app/activities"
       )
       .then((response) => {
-        setCalls(response.data);
+        const sortedData = dateSorter(response.data)
+        setCalls(sortedData);
         console.log(response.data)
+        console.log(calls)
       })
       .catch((error) => {
         console.log("Error fetching Le Data", error);
