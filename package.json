@@ -9,7 +9,7 @@
   "private": false,
   "scripts": {
     "start": "webpack-dev-server --mode development --open",
-    "build": "NODE_OPTIONS='--openssl-legacy-provider' react-scripts build"
+    "build": "webpack --mode production"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.8.8",
