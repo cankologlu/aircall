@@ -11,10 +11,11 @@ const CallsProvider = ({children }) => {
   const callsApi = () => {
     axios
       .get(
-        "https://charming-bat-singlet.cyclic.app/https://cerulean-marlin-wig.cyclic.app/activities"
+        "https://cerulean-marlin-wig.cyclic.app/activities"
       )
       .then((response) => {
         setCalls(response.data);
+        console.log(response.data)
       })
       .catch((error) => {
         console.log("Error fetching Le Data", error);
@@ -28,7 +29,7 @@ const CallsProvider = ({children }) => {
   const updateIsArchived = (callId, isArchived) => {
     axios
       .patch(
-        `https://charming-bat-singlet.cyclic.app/https://cerulean-marlin-wig.cyclic.app/activities${callId}`,
+        `https://cerulean-marlin-wig.cyclic.app/activities${callId}`,
         {
           is_archived: isArchived,
         }
