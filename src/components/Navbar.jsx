@@ -1,6 +1,7 @@
 import React from "react";
 
 import ActivityList from "./ActivityList.jsx";
+import ArchiveList from "./ArchiveList.jsx"
 
 import {
   Tabs,
@@ -48,41 +49,11 @@ const Navbar = () => {
       
       <TabPanels display={"inherit"}>
         <TabPanel>
-        <Button 
-        height={5}
-        colorScheme=""
-        variant="outline"
-        w="100%"
-        borderTop="none"
-        borderRadius="0"
-        borderLeft={"none"}
-        borderRight={"none"}
 
-        _focus={{
-          boxShadow: "inner",
-          py: "inherit",
-          rounded: "sm",
-          bg: "white",
-          borderTop: "none",
-          borderTopRadius: "0",
-          height:"3"
-        }}
-        _selected={{
-          boxShadow: "inner",
-          py: "inherit",
-          rounded: "sm",
-          bg: "white",
-          borderTop: "none",
-          borderTopRadius: "0",
-          height:"3",
-        }}
-      >
-        Archive all calls
-      </Button>
           <ActivityList />
         </TabPanel>
         <TabPanel>
-          <p>two!</p>
+          <ArchiveList/>
         </TabPanel>
       </TabPanels>
     </Tabs>

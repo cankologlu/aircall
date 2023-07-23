@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Icon,
@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import { FaPhoneAlt, FaEllipsisV } from "react-icons/fa";
 import { BiPhoneIncoming, BiPhoneOutgoing } from "react-icons/bi";
-
 
 const mockData = [
   {
@@ -61,79 +60,100 @@ const mockData = [
   },
 ];
 
-
 const dateSorter = (data) => {
-  return data.reduce((dateOfCall, call)=>{
-    const callDate = call.created_at.split("T")[0]
-    if(dateOfCall[callDate]) {
+  return data.reduce((dateOfCall, call) => {
+    const callDate = call.created_at.split("T")[0];
+    if (dateOfCall[callDate]) {
       dateOfCall[callDate].push(call);
-    }
-    else {
+    } else {
       dateOfCall[callDate] = [call];
     }
     return dateOfCall;
-
-  },{})
-}
-
-console.log(dateSorter(mockData));
+  }, {});
+};
 
 const ActivityList = () => {
+  const [calls, setCalls] = useState({});
+  useEffect(() => {
+    const sortedData = dateSorter(mockData);
+    setCalls(sortedData);
+  }, []);
+  console.log(calls);
   return (
-    
-    <Box
-      boxShadow="lg"
-      p="6"
-      rounded="md"
-      bg="white"
-      mt={"10px"}
-      paddingY={"10px"}
-    >
-      <SimpleGrid templateColumns={"repeat(5,1fr)"}>
-        <Icon
-          colSpan={1}
-          as={BiPhoneIncoming}
-          boxSize={"25px"}
-          color="red.500"
-          width={"min-content"}
-        />
+    <Box>
+      {Object.entries(calls).map(([date, callList]) => (callList.some((call) => !call.is_archived) &&
+        <Box key={date}>
+          <Text my={"10px"} alignContent={"center"}>
+            {date}
+          </Text>
+          <Divider my={"10px"} mx={"10px"} />
+          {callList.map(
+            (call) =>
+              !call.is_archived && (
+                <Box
+                  key={call.id}
+                  boxShadow="lg"
+                  p="6"
+                  rounded="md"
+                  bg="white"
+                  mt={"10px"}
+                  paddingY={"10px"}
+                >
+                  <SimpleGrid templateColumns={"repeat(5,1fr)"}>
+                    <Icon
+                      as={
+                        call.direction === "inbound"
+                          ? BiPhoneIncoming
+                          : BiPhoneOutgoing
+                      }
+                      boxSize={"25px"}
+                      color={call.duration > 0 ? "green.500" : "red.500"}
+                      width={"min-content"}
+                    />
 
-        <Text
-          width={"max-content"}
-          colSpan={3}
-          alignSelf={"center"}
-          justifySelf={"center"}
-        >
-          mogadishu and sons
-        </Text>
-        <Badge
-          colorScheme="red"
-          height={"min-content"}
-          width={"min-content"}
-          alignSelf={"center"}
-          justifySelf={"center"}
-        >
-          3
-        </Badge>
+                    <Text
+                      width={"max-content"}
+                      colSpan={1}
+                      alignSelf={"center"}
+                      justifySelf={"center"}
+                    >
+                      {"" + call.from}
+                    </Text>
+                    <Badge
+                      colorScheme="red"
+                      height={"min-content"}
+                      width={"min-content"}
+                      alignSelf={"center"}
+                      justifySelf={"center"}
+                    >
+                      3
+                    </Badge>
 
-        <IconButton
-          colSpan={1}
-          bg={"white"}
-          width={"2px"}
-          onClick={() => console.log("hey")}
-          icon={<FaEllipsisV />}
-        />
-        <Text
-          colSpan={1}
-          display={"flex"}
-          alignSelf={"center"}
-          justifySelf={"center"}
-        >
-          Time
-        </Text>
-      </SimpleGrid>
-      <Divider />
-      <Text mt={"2px"}>Called on: Phone</Text>
+                    <IconButton
+                      colSpan={1}
+                      bg={"white"}
+                      width={"2px"}
+                      onClick={() => console.log("hey")}
+                      icon={<FaEllipsisV />}
+                    />
+                    <Text
+                      colSpan={1}
+                      display={"flex"}
+                      alignSelf={"center"}
+                      justifySelf={"center"}
+                    >
+                      {/* {call.created_at.split("T")[1].split(":")[0] + ":" + call.created_at.split("T")[1].split(":")[1]} */}
+                    </Text>
+                  </SimpleGrid>
+                  <Divider />
+                  <Text mt={"2px"}>
+                    Called on: {call.via ? "aircall" : "phone"}
+                  </Text>
+                </Box>
+              )
+          )}
+        </Box>
+      ))}
     </Box>
   );
 };
