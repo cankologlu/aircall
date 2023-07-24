@@ -11,6 +11,8 @@ import {
 import { FaEllipsisV } from "react-icons/fa";
 import { BiPhoneIncoming, BiPhoneOutgoing, BiArchiveIn } from "react-icons/bi";
 
+import dateFormatter from "../helpers/dateFormatter.js";
+import timeFormatter from "../helpers/timeFormatter.js";
 import { CallsContext } from "../context/CallsProvider.jsx";
 
 
@@ -43,8 +45,8 @@ const ActivityList = () => {
         ([date, callList]) =>
           callList.some((call) => !call.is_archived) && (
             <Box key={date}>
-              <Text my={"10px"} alignContent={"center"}>
-                {date}
+              <Text my={"5px"} >
+                {dateFormatter(date)}
               </Text>
               <Divider my={"10px"} mx={"10px"} />
               {callList.map(
@@ -103,10 +105,7 @@ const ActivityList = () => {
                           alignSelf={"center"}
                           justifySelf={"center"}
                         >
-                          {new Date(call.created_at).toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
+                          {timeFormatter(call.created_at)}
                         </Text>
                       </SimpleGrid>
                       <Divider />
