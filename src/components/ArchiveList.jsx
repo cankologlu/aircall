@@ -26,8 +26,13 @@ import dateFormatter from "../helpers/dateFormatter.js";
 import timeFormatter from "../helpers/timeFormatter.js";
 
 const ArchiveList = () => {
-  const { calls, updateIsArchived } = useContext(CallsContext);
+  const { calls, updateIsArchived, unArchiveAll } = useContext(CallsContext);
   const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const handleConfirm = () => {
+    unArchiveAll();
+    onClose();
+  }
 
   return (
     <Box
@@ -61,7 +66,7 @@ const ArchiveList = () => {
           <ModalHeader alignSelf={"center"}>Unarchive all calls?</ModalHeader>
           <ModalCloseButton />
           <ModalFooter display={"flex"}>
-            <Button alignSelf={"center"} colorScheme='red' mr={3} onClick={onClose}>
+            <Button alignSelf={"center"} colorScheme='red' mr={3} onClick={handleConfirm}>
               Confirm
             </Button>
           </ModalFooter>

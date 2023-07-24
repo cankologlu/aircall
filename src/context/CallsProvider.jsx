@@ -68,8 +68,18 @@ const CallsProvider = ({ children }) => {
       });
   };
 
+  const unArchiveAll =() => {
+    axios.patch("https://cerulean-marlin-wig.cyclic.app/reset")
+    .then((response) => {
+      console.log("Api states reset",response);
+      callsApi();
+    }).catch((error) => {
+      console.log("Reset Error", error)
+    })
+  }
+
   return (
-    <CallsContext.Provider value={{ calls, updateIsArchived, archiveAll }}>
+    <CallsContext.Provider value={{ calls, updateIsArchived, archiveAll, unArchiveAll }}>
       {children}
     </CallsContext.Provider>
   );

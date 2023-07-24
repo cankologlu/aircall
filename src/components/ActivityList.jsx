@@ -31,10 +31,13 @@ const ActivityList = () => {
   const { calls, updateIsArchived, archiveAll } = useContext(CallsContext);
   const { isOpen, onOpen, onClose } = useDisclosure()
 
+  // Handle both actions at the same time
   const handleConfirm = () => {
     archiveAll(); 
     onClose(); 
   }
+
+
   return (
     <Box
     overflowY="auto"
