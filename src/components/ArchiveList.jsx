@@ -108,7 +108,7 @@ const ArchiveList = () => {
 
                         <Text
                           key={"from" + call.id}
-                          width={"max-content"}
+                          width={"55px"}
                           colSpan={1}
                           alignSelf={"center"}
                           justifySelf={"center"}

@@ -110,7 +110,7 @@ const ActivityList = () => {
                         />
 
                         <Text
-                          width={"max-content"}
+                          width={"55px"}
                           colSpan={1}
                           alignSelf={"center"}
                           justifySelf={"center"}
@@ -131,10 +131,11 @@ const ActivityList = () => {
                         <IconButton
                           colSpan={1}
                           bg={"white"}
-                          width={"2px"}
+                          boxSize={"40px"}
                           onClick={() => {console.log("calls from onclick", calls); console.log("call from onclick", call);updateIsArchived(call.id, true)}}
                           icon={<BiArchiveIn />}
                           isDisabled={!call.from}
+                          
                         />
                         <Text
                           colSpan={1}
