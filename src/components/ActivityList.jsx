@@ -79,7 +79,7 @@ const ActivityList = () => {
       </Container>
       {Object.entries(calls).reverse().map(
         ([date, callList]) =>
-          callList.some((call) => !call.is_archived) && (
+          callList.reverse().some((call) => !call.is_archived) && (
             <Box key={date}>
               <Text my={"5px"} color={"blackAlpha.600"} fontSize={"xs"} >
                 {dateFormatter(date)}
