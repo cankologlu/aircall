@@ -7,6 +7,15 @@ import {
   SimpleGrid,
   IconButton,
   Divider,
+  Container,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalCloseButton,
+  useDisclosure
 } from "@chakra-ui/react";
 import { FaEllipsisV } from "react-icons/fa";
 import { BiPhoneIncoming, BiPhoneOutgoing, BiArchiveOut } from "react-icons/bi";
@@ -18,6 +27,7 @@ import timeFormatter from "../helpers/timeFormatter.js";
 
 const ArchiveList = () => {
   const { calls, updateIsArchived } = useContext(CallsContext);
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <Box
@@ -40,6 +50,24 @@ const ArchiveList = () => {
         },
       }}
     >
+      <Container as={Button} 
+          _focus={{
+            boxShadow: "none"
+          }} onClick={onOpen}>
+        <Text>Unarchive All</Text>
+            <Modal isOpen={isOpen} onClose={onClose} isCentered size={"xs"} mt={"450px"}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader alignSelf={"center"}>Unarchive all calls?</ModalHeader>
+          <ModalCloseButton />
+          <ModalFooter display={"flex"}>
+            <Button alignSelf={"center"} colorScheme='red' mr={3} onClick={onClose}>
+              Confirm
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      </Container>
       {Object.entries(calls).reverse().map(
         ([date, callList]) =>
           callList.some((call) => call.is_archived) && (

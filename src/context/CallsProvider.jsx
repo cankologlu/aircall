@@ -3,23 +3,19 @@ import axios from "axios";
 
 import dateSorter from "../helpers/dateSorter";
 
-
 const CallsContext = createContext({});
 
-const CallsProvider = ({children }) => {
+const CallsProvider = ({ children }) => {
   const [calls, setCalls] = useState({});
 
   // Function to make API call
   const callsApi = () => {
     axios
-      .get(
-        "https://cerulean-marlin-wig.cyclic.app/activities"
-      )
+      .get("https://cerulean-marlin-wig.cyclic.app/activities")
       .then((response) => {
-        const sortedData = dateSorter(response.data)
+        const sortedData = dateSorter(response.data);
         setCalls(sortedData);
-        console.log(response.data)
-        console.log(calls)
+        console.log(response.data);
       })
       .catch((error) => {
         console.log("Error fetching Le Data", error);
@@ -31,33 +27,52 @@ const CallsProvider = ({children }) => {
   }, []);
 
   const updateIsArchived = (callId, isArchived) => {
-    console.log("Patch req callid", callId)
+    console.log("Patch req callid", callId);
     const Id = callId;
     axios
       .patch(
         `https://cerulean-marlin-wig.cyclic.app/activities/${Id}`,
         {
           is_archived: isArchived,
-        }, {
+        },
+        {
           headers: {
-           
             "Content-Type": "application/json",
           },
         }
       )
       .then((response) => {
-        console.log('Response data after patch req', response.data)
+        console.log("Response data after patch req", response.data);
         callsApi();
       })
       .catch((error) => {
         console.log("Error updating is_archived", error);
       });
   };
+
+  const archiveAll = () => {
+    const archiveAllCalls = Object.entries(calls).map(([date, callList]) => {
+      callList.map((call) => {
+        if (call.from && !call.is_archived) {
+          return updateIsArchived(call.id, true);
+        }
+      });
+    });
+    Promise.all(archiveAllCalls)
+      .then((response) => {
+        console.log("Archived all calls");
+        callsApi();
+      })
+      .catch((error) => {
+        console.log("Error archiving all calls", error);
+      });
+  };
+
   return (
-    <CallsContext.Provider value={{ calls, updateIsArchived }}>
+    <CallsContext.Provider value={{ calls, updateIsArchived, archiveAll }}>
       {children}
     </CallsContext.Provider>
-  )
+  );
 };
 
-export { CallsContext, CallsProvider}
+export { CallsContext, CallsProvider };

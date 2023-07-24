@@ -7,9 +7,19 @@ import {
   SimpleGrid,
   IconButton,
   Divider,
+  Container,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalCloseButton,
+  useDisclosure
 } from "@chakra-ui/react";
-import { FaEllipsisV } from "react-icons/fa";
-import { BiPhoneIncoming, BiPhoneOutgoing, BiArchiveIn } from "react-icons/bi";
+import { FaEllipsisV} from "react-icons/fa";
+import { BiPhoneIncoming, BiPhoneOutgoing, BiArchiveIn , BiArchive  } from "react-icons/bi";
+
 
 import dateFormatter from "../helpers/dateFormatter.js";
 import timeFormatter from "../helpers/timeFormatter.js";
@@ -18,29 +28,52 @@ import { CallsContext } from "../context/CallsProvider.jsx";
 
 
 const ActivityList = () => {
-  const { calls, updateIsArchived } = useContext(CallsContext);
-  console.log("Calls from context are:",calls)
+  const { calls, updateIsArchived, archiveAll } = useContext(CallsContext);
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const handleConfirm = () => {
+    archiveAll(); 
+    onClose(); 
+  }
   return (
     <Box
-      overflowY="auto"
-      maxHeight="450px"
-      overflowX="hidden"
-      paddingY="10px"
-      paddingX="8px"
-      w={"inherit"}
-      css={{
-        "&::-webkit-scrollbar": {
-          width: "4px",
-        },
-        "&::-webkit-scrollbar-track": {
-          width: "4px",
-        },
-        "&::-webkit-scrollbar-thumb": {
-          background: "#CBD5E0",
-          borderRadius: "24px",
-        },
-      }}
+    overflowY="auto"
+    maxHeight="450px"
+    overflowX="hidden"
+    paddingY="10px"
+    paddingX="8px"
+    w={"inherit"}
+    css={{
+      "&::-webkit-scrollbar": {
+        width: "4px",
+      },
+      "&::-webkit-scrollbar-track": {
+        width: "4px",
+      },
+      "&::-webkit-scrollbar-thumb": {
+        background: "#CBD5E0",
+        borderRadius: "24px",
+      },
+    }}
     >
+      <Container as={Button} 
+          _focus={{
+            boxShadow: "none"
+          }} onClick={onOpen}>
+        <Text>Archive All</Text>
+            <Modal isOpen={isOpen} onClose={onClose} isCentered size={"xs"} mt={"450px"}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader alignSelf={"center"}>Archive all calls?</ModalHeader>
+          <ModalCloseButton />
+          <ModalFooter display={"flex"}>
+            <Button alignSelf={"center"} colorScheme='red' mr={3} onClick={handleConfirm}>
+              Confirm
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      </Container>
       {Object.entries(calls).reverse().map(
         ([date, callList]) =>
           callList.some((call) => !call.is_archived) && (
