@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import Header from './Header.jsx';
 import Navbar from './components/Navbar.jsx';
+import Footer from './components/Footer.jsx';
 
 import { ChakraProvider, extendTheme, Box, Container  } from '@chakra-ui/react';
 
@@ -51,6 +52,7 @@ const App = () => {
         <Container boxShadow='dark-lg'm="15px" p="none" rounded='md' bg='white'h={"95%"}>
       <Header/>
       <Navbar/>
+      <Footer/>
     </Container>
     </Box>
    </ChakraProvider>

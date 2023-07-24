@@ -37,7 +37,7 @@ const ArchiveList = () => {
   return (
     <Box
       overflowY="auto"
-      maxHeight="450px"
+      height="450px"
       overflowX="hidden"
       paddingY="10px"
       paddingX="8px"
@@ -60,7 +60,7 @@ const ArchiveList = () => {
             boxShadow: "none"
           }} onClick={onOpen}>
         <Text>Unarchive All</Text>
-            <Modal isOpen={isOpen} onClose={onClose} isCentered size={"xs"} mt={"450px"}>
+            <Modal isOpen={isOpen} onClose={onClose} isCentered size={"xs"} >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader alignSelf={"center"}>Unarchive all calls?</ModalHeader>
@@ -76,17 +76,17 @@ const ArchiveList = () => {
       {Object.entries(calls).reverse().map(
         ([date, callList]) =>
           callList.some((call) => call.is_archived) && (
-            <Box key={date}>
-              <Text my={"5px"} >
+            <Box key={date} >
+              <Text my={"5px"} color={"blackAlpha.600"} fontSize={"xs"}>
                 {dateFormatter(date)}
               </Text>
-              <Divider my={"10px"} mx={"10px"} />
+              <Divider my={"10px"} />
               {callList.map(
                 (call) =>
                   call.is_archived && (
                     <Box
                       key={call.id}
-                      boxShadow="lg"
+                      boxShadow="md"
                       p="6"
                       rounded="md"
                       bg="white"
@@ -117,11 +117,12 @@ const ArchiveList = () => {
                         </Text>
                         <Badge
                           key={"badge" + call.id}
-                          colorScheme="red"
+                          colorScheme="orange"
                           height={"min-content"}
                           width={"min-content"}
                           alignSelf={"center"}
                           justifySelf={"center"}
+                          borderRadius={"20px"}
                         >
                           1
                         </Badge>
@@ -142,12 +143,13 @@ const ArchiveList = () => {
                           display={"flex"}
                           alignSelf={"center"}
                           justifySelf={"center"}
+                          fontSize={"xs"} color={"gray"}
                         >
                           {timeFormatter(call.created_at)}
                         </Text>
                       </SimpleGrid>
                       <Divider />
-                      <Text mt={"2px"}>
+                      <Text mt={"2px"} fontSize={"xs"} color={"gray"}>
                         Called on: {call.via ? "aircall" : "phone"}
                       </Text>
                     </Box>

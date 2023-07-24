@@ -41,7 +41,7 @@ const ActivityList = () => {
   return (
     <Box
     overflowY="auto"
-    maxHeight="450px"
+    height="450px"
     overflowX="hidden"
     paddingY="10px"
     paddingX="8px"
@@ -64,7 +64,7 @@ const ActivityList = () => {
             boxShadow: "none"
           }} onClick={onOpen}>
         <Text>Archive All</Text>
-            <Modal isOpen={isOpen} onClose={onClose} isCentered size={"xs"} mt={"450px"}>
+            <Modal isOpen={isOpen} onClose={onClose} isCentered size={"xs"} >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader alignSelf={"center"}>Archive all calls?</ModalHeader>
@@ -81,16 +81,16 @@ const ActivityList = () => {
         ([date, callList]) =>
           callList.some((call) => !call.is_archived) && (
             <Box key={date}>
-              <Text my={"5px"} >
+              <Text my={"5px"} color={"blackAlpha.600"} fontSize={"xs"} >
                 {dateFormatter(date)}
               </Text>
-              <Divider my={"10px"} mx={"10px"} />
+              <Divider my={"10px"}  />
               {callList.map(
                 (call) =>
                   !call.is_archived && (
                     <Box
                       key={call.id}
-                      boxShadow="lg"
+                      boxShadow="md"
                       p="6"
                       rounded="md"
                       bg="white"
@@ -118,11 +118,12 @@ const ActivityList = () => {
                           {call.from === undefined ? "Unknown" : "" + call.from}
                         </Text>
                         <Badge
-                          colorScheme="red"
+                          colorScheme="orange"
                           height={"min-content"}
                           width={"min-content"}
                           alignSelf={"center"}
                           justifySelf={"center"}
+                          borderRadius={"20px"}
                         >
                           1
                         </Badge>
@@ -140,12 +141,13 @@ const ActivityList = () => {
                           display={"flex"}
                           alignSelf={"center"}
                           justifySelf={"center"}
+                          fontSize={"xs"} color={"gray"}
                         >
                           {timeFormatter(call.created_at)}
                         </Text>
                       </SimpleGrid>
                       <Divider />
-                      <Text mt={"2px"}>
+                      <Text mt={"2px"} fontSize={"xs"} color={"gray"}>
                         Called on: {call.via ? "aircall" : "phone"}
                       </Text>
                     </Box>

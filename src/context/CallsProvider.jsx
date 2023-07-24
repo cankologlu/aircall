@@ -15,7 +15,6 @@ const CallsProvider = ({ children }) => {
       .then((response) => {
         const sortedData = dateSorter(response.data);
         setCalls(sortedData);
-        console.log(response.data);
       })
       .catch((error) => {
         console.log("Error fetching Le Data", error);
@@ -71,7 +70,7 @@ const CallsProvider = ({ children }) => {
   const unArchiveAll =() => {
     axios.patch("https://cerulean-marlin-wig.cyclic.app/reset")
     .then((response) => {
-      console.log("Api states reset",response);
+      // console.log("Api states reset",response);
       callsApi();
     }).catch((error) => {
       console.log("Reset Error", error)
